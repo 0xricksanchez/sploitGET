@@ -44,39 +44,37 @@ class Sploitus:
         response = json.loads(requests.post(self.url, headers=self.header, data=json.dumps(query_dict)).text)
         if int(response['exploits_total']):
             print(clr.Fore.GREEN + '[+] Found {} results!\n'.format(response['exploits_total']) + clr.Fore.RESET)
+            res_table = prettytable.PrettyTable()
+            res_table.max_width = int(subprocess.check_output(['stty', 'size'], encoding='utf-8').split()[1])
             if self.type == 'exploits':
-                self._parse_exploit_query_results(response)
+                self._parse_exploit_query_results(response, res_table)
             elif self.type == 'tools':
-                self._parse_tools_query_results(response)
+                self._parse_tools_query_results(response, res_table)
         else:
             print(clr.Fore.RED + '[!] No Results found\n' + clr.Fore.RESET)
-            sys.exit(1)
 
     @staticmethod
-    def _parse_exploit_query_results(response):
+    def _parse_exploit_query_results(response, res_table):
         rem_chin = re.compile(u'[⺀-⺙⺛-⻳⼀-⿕々〇〡-〩〸-〺〻㐀-䶵一-鿃豈-鶴侮-頻並-龎]', re.UNICODE)
-        res = prettytable.PrettyTable()
-        res.max_width = int(subprocess.check_output(['stty', 'size'], encoding='utf-8').split()[1])
-        res.field_names = ['Title', 'URL', 'Date', 'Published', 'Score']
+        res_table.field_names = ['Title', 'URL', 'Date', 'Published', 'Score']
         for entry in response['exploits']:
             title = rem_chin.sub('', entry['title'].replace('&quot;', ''))
             if len(title) > 45:
-                res.add_row([title[:45], entry['href'], entry['published'], entry['type'], entry['score']])
+                res_table.add_row([title[:45], entry['href'], entry['published'], entry['type'], entry['score']])
             else:
-                res.add_row([title, entry['href'], entry['published'], entry['type'], entry['score']])
-        print(res)
+                res_table.add_row([title, entry['href'], entry['published'], entry['type'], entry['score']])
+        print(res_table)
 
     @staticmethod
-    def _parse_tools_query_results(response):
-        res = prettytable.PrettyTable()
-        res.max_width = int(subprocess.check_output(['stty', 'size'], encoding='utf-8').split()[1])
-        res.field_names = ['Title', 'URL', 'Blog']
+    def _parse_tools_query_results(response, res_table):
+        res_table.field_names = ['Title', 'URL', 'Blog']
         for entry in response['exploits']:
-            if len(entry['title'].replace('&quot;', '')) > 45:
-                res.add_row([entry['title'].replace('&quot;', '')[:45], entry['download'], entry['href']])
+            title = entry['title'].replace('&quot;', '')
+            if len(title) > 45:
+                res_table.add_row([title[:45], entry['download'], entry['href']])
             else:
-                res.add_row([entry['title'].replace('&quot;', ''), entry['download'], entry['href']])
-        print(res)
+                res_table.add_row([title, entry['download'], entry['href']])
+        print(res_table)
 
 
 def main():
