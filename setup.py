@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='fsfuzz',
+    name='sploitGET',
     version='0.1',
     packages=['pyfiglet', 'colorama', 'prettytable', 'requests'],
     url='https://github.com/0x00rick/sploitGET',
