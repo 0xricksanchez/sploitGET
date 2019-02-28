@@ -1,14 +1,20 @@
-import requests
-import sys
 import argparse
-import subprocess
 import json
-import colorama as clr
-import pyfiglet
-import prettytable
 import re
+import subprocess
+import sys
+
+import colorama as clr
+import prettytable
+import pyfiglet
+import requests
+
 
 class Sploitus:
+
+    @staticmethod
+    def __version__():
+        return 0.1
 
     def __init__(self, query, qtype, sort):
         self._banner()
