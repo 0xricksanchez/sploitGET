@@ -59,10 +59,11 @@ class Sploitus:
         res.max_width = int(subprocess.check_output(['stty', 'size'], encoding='utf-8').split()[1])
         res.field_names = ['Title', 'URL', 'Date', 'Published', 'Score']
         for entry in response['exploits']:
-            if len(entry['title'].replace('&quot;', '')) > 45:
-                res.add_row([rem_chin.sub('', entry['title'].replace('&quot;', '')[:45]), entry['href'], entry['published'], entry['type'], entry['score']])
+            title = rem_chin.sub('', entry['title'].replace('&quot;', ''))
+            if len(title) > 45:
+                res.add_row([title[:45], entry['href'], entry['published'], entry['type'], entry['score']])
             else:
-                res.add_row([rem_chin.sub('', entry['title'].replace('&quot;', '')), entry['href'], entry['published'], entry['type'], entry['score']])
+                res.add_row([title, entry['href'], entry['published'], entry['type'], entry['score']])
         print(res)
 
     @staticmethod
