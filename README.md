@@ -1,7 +1,7 @@
 # sploitGET
 This is a simple wrapper script for https://sploitus.com that fetches either tools or exploit from their API for a specified search query.
 
-The resulting download URLs in the table are shortened via https://is.gd/.
+The resulting download URLs in the table are shortened via https://is.gd/ and https://git.io for github repos.
 By doing so and doing an automatic line break at a length of 30/50 characters the output of search queries nicely fits
 on one half of a 1080p screen with a terminal font size of ~13pts.
 
@@ -38,7 +38,7 @@ A basic search query may look like this:
 #     # #      #      #    # #   #   #     # #          #    
  #####  #      ######  ####  #   #    #####  #######    #    
                                                              
-
+────────────────────────────────────────────────────────────
 [+] Found 12 results!
 
 +--------------------------------+----------------------+------------+-------------+-------+
@@ -79,21 +79,21 @@ A basic search query may look like this:
 #     # #      #      #    # #   #   #     # #          #    
  #####  #      ######  ####  #   #    #####  #######    #    
                                                              
-
+────────────────────────────────────────────────────────────
 [+] Found 5 results!
 
 +-------------------------------------------------+----------------------+--------------+
 |                      Title                      |         URL          |   Website    |
 +-------------------------------------------------+----------------------+--------------+
-|  Celerystalk - An Asynchronous Enumeration and  | https://is.gd/Fzm4kj |  github.com  |
+|  Celerystalk - An Asynchronous Enumeration and  | https://git.io/fhACJ |  github.com  |
 |              Vulnerability Scanner              |                      |              |
 | Kali Linux 2018.4 Release - Penetration Testing | https://is.gd/ruZP0m | www.kali.org |
 |      and Ethical Hacking Linux Distribution     |                      |              |
-|   Gobuster - Directory/File & DNS Busting Tool  | https://is.gd/jOT89j |  github.com  |
+|   Gobuster - Directory/File & DNS Busting Tool  | https://git.io/fhAcd |  github.com  |
 |                  Written In Go                  |                      |              |
-|     Vanquish - Kali Linux based Enumeration     | https://is.gd/NJNf9g |  github.com  |
+|     Vanquish - Kali Linux based Enumeration     | https://git.io/fhACU |  github.com  |
 |                   Orchestrator                  |                      |              |
-| Reconnoitre - A Security Tool For Multithreaded | https://is.gd/MuijT8 |  github.com  |
+| Reconnoitre - A Security Tool For Multithreaded | https://git.io/fhACT |  github.com  |
 |  Information Gathering And Service Enumeration  |                      |              |
 +-------------------------------------------------+----------------------+--------------+
 

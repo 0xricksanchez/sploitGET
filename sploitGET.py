@@ -41,6 +41,7 @@ class Sploitus:
     def _banner(self):
         custom_fig = pyfiglet.Figlet(font='banner')
         print(custom_fig.renderText('SploitGET'))
+        print('─' * 60)
 
     def exec_query(self):
         query_dict = self._init_search_dict()
@@ -74,15 +75,24 @@ class Sploitus:
         res_table.field_names = ['Title', 'URL', 'Website']
         for entry in response['exploits']:
             title = entry['title'].replace('&quot;', '')
-            if len(title) > 50:
-                res_table.add_row([textwrap.fill(title, 50), self._get_tinyurl(entry['download']),
-                                   urlsplit(entry['download']).netloc])
+            if 'github' in entry['download']:
+                url_link = self._get_github_short(entry['download'])
             else:
-                res_table.add_row([title, self._get_tinyurl(entry['download']), urlsplit(entry['download']).netloc])
+                url_link = self._get_short_url_generic(entry['download'])
+            if len(title) > 50:
+                res_table.add_row([textwrap.fill(title, 50), url_link, urlsplit(entry['download']).netloc])
+            else:
+                res_table.add_row([title, url_link, urlsplit(entry['download']).netloc])
         print(res_table)
 
     @staticmethod
-    def _get_tinyurl(url):
+    def _get_github_short(url):
+        files = {'url': (None, url)}
+        response = requests.post('https://git.io/', files=files)
+        return response.headers['Location']
+
+    @staticmethod
+    def _get_short_url_generic(url):
         shortener = Shortener('Isgd')
         return shortener.short(url)
 
