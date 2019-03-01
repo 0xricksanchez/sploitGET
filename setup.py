@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='sploitGET',
     version='0.1',
-    packages=['pyfiglet', 'colorama', 'prettytable', 'requests'],
+    packages=['pyfiglet', 'colorama', 'prettytable', 'requests', 'pyshorteners'],
     url='https://github.com/0x00rick/sploitGET',
     license='GNU General Public License v3.0',
     author='0x00rick',

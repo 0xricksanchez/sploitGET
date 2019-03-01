@@ -5,11 +5,14 @@ import json
 import re
 import subprocess
 import sys
+import textwrap
 
 import colorama as clr
 import prettytable
 import pyfiglet
 import requests
+from pyshorteners import Shortener
+from urllib.parse import urlsplit, urlunsplit
 
 
 class Sploitus:
@@ -53,28 +56,35 @@ class Sploitus:
         else:
             print(clr.Fore.RED + '[!] No Results found\n' + clr.Fore.RESET)
 
-    @staticmethod
-    def _parse_exploit_query_results(response, res_table):
+    def _parse_exploit_query_results(self, response, res_table):
         rem_chin = re.compile(u'[⺀-⺙⺛-⻳⼀-⿕々〇〡-〩〸-〺〻㐀-䶵一-鿃豈-鶴侮-頻並-龎]', re.UNICODE)
         res_table.field_names = ['Title', 'URL', 'Date', 'Published', 'Score']
         for entry in response['exploits']:
             title = rem_chin.sub('', entry['title'].replace('&quot;', ''))
-            if len(title) > 45:
-                res_table.add_row([title[:45], entry['href'], entry['published'], entry['type'], entry['score']])
+            if len(title) > 30:
+                res_table.add_row([textwrap.fill(title, 30), self._get_tinyurl(entry['href']),
+                                   entry['published'], entry['type'], entry['score']])
             else:
-                res_table.add_row([title, entry['href'], entry['published'], entry['type'], entry['score']])
+                res_table.add_row([title, self._get_tinyurl(entry['href']), entry['published'],
+                                   entry['type'], entry['score']])
+            # time.sleep(1) # Depending on the URL shortener there might be a sleep necessary :)
+        print(res_table)
+
+    def _parse_tools_query_results(self, response, res_table):
+        res_table.field_names = ['Title', 'URL', 'Website']
+        for entry in response['exploits']:
+            title = entry['title'].replace('&quot;', '')
+            if len(title) > 50:
+                res_table.add_row([textwrap.fill(title, 50), self._get_tinyurl(entry['download']),
+                                   urlsplit(entry['download']).netloc])
+            else:
+                res_table.add_row([title, self._get_tinyurl(entry['download']), urlsplit(entry['download']).netloc])
         print(res_table)
 
     @staticmethod
-    def _parse_tools_query_results(response, res_table):
-        res_table.field_names = ['Title', 'URL', 'Blog']
-        for entry in response['exploits']:
-            title = entry['title'].replace('&quot;', '')
-            if len(title) > 45:
-                res_table.add_row([title[:45], entry['download'], entry['href']])
-            else:
-                res_table.add_row([title, entry['download'], entry['href']])
-        print(res_table)
+    def _get_tinyurl(url):
+        shortener = Shortener('Isgd')
+        return shortener.short(url)
 
 
 def main():

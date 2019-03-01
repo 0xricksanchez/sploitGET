@@ -1,5 +1,11 @@
 # sploitGET
-This is a simple wrapper script for https://sploitus.com.
+This is a simple wrapper script for https://sploitus.com that fetches either tools or exploit from their API for a specified search query.
+
+The resulting download URLs in the table are shortened via https://is.gd/.
+By doing so and doing an automatic line break at a length of 30 characters the output of search queries nicely fits
+on one half of a 1080p screen with a terminal font size of ~13pts.
+
+Feel free to edit the script or suggest changes.
 
 ## Usage
 
@@ -23,8 +29,7 @@ optional arguments:
 A basic search query may look like this:
 
 ```bash
-python3 sploitGET.py -q "Linux Kernel 3.13" -t exploits -s default
-
+-> % python3 sploitGET.py -q "Linux Kernel 3.13" -s score
  #####                                #####  ####### ####### 
 #     # #####  #       ####  # ##### #     # #          #    
 #       #    # #      #    # #   #   #       #          #    
@@ -36,24 +41,36 @@ python3 sploitGET.py -q "Linux Kernel 3.13" -t exploits -s default
 
 [+] Found 12 results!
 
-+-----------------------------------------------+------------------------------------------------------------------------------+------------+-------------+-------+
-|                     Title                     |                                     URL                                      |    Date    |  Published  | Score |
-+-----------------------------------------------+------------------------------------------------------------------------------+------------+-------------+-------+
-|     Linux Nested NMIs Privilege Escalation    | https://packetstormsecurity.com/files/download/132994/linuxnmis-escalate.txt | 2015-08-07 | packetstorm |  7.2  |
-| Linux espfix64 - Privilege Escalation Nested  |                  https://www.exploit-db.com/download/37722/                  | 2015-08-05 |  exploitdb  |  7.2  |
-| Linux x86_64 NMI Privilege Escalation Due to  |                       https://0day.today/exploit/23971                       | 2015-08-05 |     zdt     |  7.2  |
-|  Linux Kernel splice System Call - Local DoS  |                  https://www.exploit-db.com/download/36743/                  | 2015-04-13 |  exploitdb  |  7.2  |
-| Linux Kernel <= 3.13 - Local Privilege Escala |                   https://www.seebug.org/vuldb/ssvid-87007                   | 2014-07-01 |    seebug   |  6.2  |
-| Linux Kernel <= 3.13 - Local Privilege Escala |                       https://0day.today/exploit/22363                       | 2014-06-22 |     zdt     |  6.2  |
-| Linux Kernel <= 3.13 - Local Privilege Escala |                  https://www.exploit-db.com/download/33824/                  | 2014-06-21 |  exploitdb  |  6.2  |
-|        Linux Kernel inet_frag_intern()        |                   https://www.seebug.org/vuldb/ssvid-62030                   | 2014-04-02 |    seebug   |  9.3  |
-|     Linux Kernel 'arch_dup_task_struct()'     |                   https://www.seebug.org/vuldb/ssvid-61996                   | 2014-03-31 |    seebug   |  9.3  |
-|     Linux Kernel ath9k ath_tx_aggr_sleep()    |                   https://www.seebug.org/vuldb/ssvid-61997                   | 2014-03-31 |    seebug   |  9.3  |
-+-----------------------------------------------+------------------------------------------------------------------------------+------------+-------------+-------+
++--------------------------------+----------------------+------------+-------------+-------+
+|             Title              |         URL          |    Date    |  Published  | Score |
++--------------------------------+----------------------+------------+-------------+-------+
+|       Linux Kernel DCCP        | https://is.gd/ReNKyx | 2014-03-19 |    seebug   |  10.0 |
+|          Linux Kernel          | https://is.gd/a2gmK7 | 2014-04-02 |    seebug   |  9.3  |
+|       inet_frag_intern()       |                      |            |             |       |
+|  Linux Nested NMIs Privilege   | https://is.gd/FHb9XU | 2015-08-07 | packetstorm |  7.2  |
+|           Escalation           |                      |            |             |       |
+|   Linux espfix64 - Privilege   | https://is.gd/niEvef | 2015-08-05 |  exploitdb  |  7.2  |
+|     Escalation Nested NMIs     |                      |            |             |       |
+|          Interrupting          |                      |            |             |       |
+|   Linux x86_64 NMI Privilege   | https://is.gd/QfLB6t | 2015-08-05 |     zdt     |  7.2  |
+| Escalation Due to Nested NMIs  |                      |            |             |       |
+|     Interrupting espfix64      |                      |            |             |       |
+|   Linux Kernel splice System   | https://is.gd/xzz9Vc | 2015-04-13 |  exploitdb  |  7.2  |
+|        Call - Local DoS        |                      |            |             |       |
+|  Linux Kernel <= 3.13 - Local  | https://is.gd/453sk4 | 2014-07-01 |    seebug   |  6.2  |
+| Privilege Escalation PoC (gid) |                      |            |             |       |
+|  Linux Kernel <= 3.13 - Local  | https://is.gd/XCmSa1 | 2014-06-22 |     zdt     |  6.2  |
+| Privilege Escalation PoC (gid) |                      |            |             |       |
+|  Linux Kernel <= 3.13 - Local  | https://is.gd/M260Y7 | 2014-06-21 |  exploitdb  |  6.2  |
+|  Privilege Escalation PoC gid  |                      |            |             |       |
+|       Linux Kernel IPv6        | https://is.gd/pq8VZm | 2014-03-11 |    seebug   |  6.1  |
++--------------------------------+----------------------+------------+-------------+-------+
+
 ```
 
 ```bash
-python3 sploitGET.py -q "gobuster" -t tools
+-> % python3 sploitGET.py -q "gobuster" -t tools
+
  #####                                #####  ####### ####### 
 #     # #####  #       ####  # ##### #     # #          #    
 #       #    # #      #    # #   #   #       #          #    
@@ -65,19 +82,24 @@ python3 sploitGET.py -q "gobuster" -t tools
 
 [+] Found 5 results!
 
-+-----------------------------------------------+----------------------------------------+------------------------------------------------------------------------------+
-|                     Title                     |                  URL                   |                                     Blog                                     |
-+-----------------------------------------------+----------------------------------------+------------------------------------------------------------------------------+
-| Celerystalk - An Asynchronous Enumeration and | https://github.com/sethsec/celerystalk |  http://www.kitploit.com/2018/12/celerystalk-asynchronous-enumeration.html   |
-| Kali Linux 2018.4 Release - Penetration Testi |    https://www.kali.org/downloads/     |  http://www.kitploit.com/2018/10/kali-linux-20184-release-penetration.html   |
-| Gobuster - Directory/File & DNS Busting Tool  |     https://github.com/OJ/gobuster     | http://www.kitploit.com/2018/02/gobuster-directoryfile-dns-busting-tool.html |
-| Vanquish - Kali Linux based Enumeration Orche |   https://github.com/frizb/Vanquish    |  http://www.kitploit.com/2017/10/vanquish-kali-linux-based-enumeration.html  |
-| Reconnoitre - A Security Tool For Multithread | https://github.com/codingo/Reconnoitre |      http://www.kitploit.com/2017/05/reconnoitre-security-tool-for.html      |
-+-----------------------------------------------+----------------------------------------+------------------------------------------------------------------------------+
++-------------------------------------------------+----------------------+--------------+
+|                      Title                      |         URL          |   Website    |
++-------------------------------------------------+----------------------+--------------+
+|  Celerystalk - An Asynchronous Enumeration and  | https://is.gd/Fzm4kj |  github.com  |
+|              Vulnerability Scanner              |                      |              |
+| Kali Linux 2018.4 Release - Penetration Testing | https://is.gd/ruZP0m | www.kali.org |
+|      and Ethical Hacking Linux Distribution     |                      |              |
+|   Gobuster - Directory/File & DNS Busting Tool  | https://is.gd/jOT89j |  github.com  |
+|                  Written In Go                  |                      |              |
+|     Vanquish - Kali Linux based Enumeration     | https://is.gd/NJNf9g |  github.com  |
+|                   Orchestrator                  |                      |              |
+| Reconnoitre - A Security Tool For Multithreaded | https://is.gd/MuijT8 |  github.com  |
+|  Information Gathering And Service Enumeration  |                      |              |
++-------------------------------------------------+----------------------+--------------+
+
 ```
 
 ## Known Issues
 
-* The current table does no automatic line wrapping
 * The used curl command does not load **all** results if there are > 10
   * Sploitus loads these results dynamically when scrolling
