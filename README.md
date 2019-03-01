@@ -2,7 +2,7 @@
 This is a simple wrapper script for https://sploitus.com that fetches either tools or exploit from their API for a specified search query.
 
 The resulting download URLs in the table are shortened via https://is.gd/.
-By doing so and doing an automatic line break at a length of 30 characters the output of search queries nicely fits
+By doing so and doing an automatic line break at a length of 30/50 characters the output of search queries nicely fits
 on one half of a 1080p screen with a terminal font size of ~13pts.
 
 Feel free to edit the script or suggest changes.
