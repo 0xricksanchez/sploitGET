@@ -63,10 +63,10 @@ class Sploitus:
         for entry in response['exploits']:
             title = rem_chin.sub('', entry['title'].replace('&quot;', ''))
             if len(title) > 30:
-                res_table.add_row([textwrap.fill(title, 30), self._get_tinyurl(entry['href']),
+                res_table.add_row([textwrap.fill(title, 30), self._get_short_url_generic(entry['href']),
                                    entry['published'], entry['type'], entry['score']])
             else:
-                res_table.add_row([title, self._get_tinyurl(entry['href']), entry['published'],
+                res_table.add_row([title, self._get_short_url_generic(entry['href']), entry['published'],
                                    entry['type'], entry['score']])
             # time.sleep(1) # Depending on the URL shortener there might be a sleep necessary :)
         print(res_table)
